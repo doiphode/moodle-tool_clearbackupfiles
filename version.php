@@ -16,13 +16,15 @@
 
 /**
  * Version details.
- * @author	   Shubhendra Doiphode
  * @package    tool_clearbackupfiles
+ * @copyright  2015 Shubhendra Doiphode
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2017100300;
-$plugin->requires  = 2014110400;
+$plugin->version   = 2017100301;
+$plugin->requires  = 2016110800;
 $plugin->component = 'tool_clearbackupfiles';
+$plugin->release = '3.2, release 1';
+$plugin->maturity = MATURITY_STABLE; // This is considered as ready for production sites.
