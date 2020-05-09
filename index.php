@@ -20,45 +20,56 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once(dirname(__FILE__) . '/../../../config.php');
-require_once("$CFG->libdir/filestorage/file_storage.php");
-global $CFG, $DB, $EXTDB; // Globals
-$backupfiles = $DB->get_records_sql(
-    "SELECT * from mdl_files sq where sq.mimetype like '%backup%'"
-);
+require(__DIR__ . '/../../../config.php');
+require_once($CFG->libdir . '/adminlib.php');
+require_once($CFG->libdir . '/filestorage/file_storage.php');
 
-print '<h2>Clear backup files</h2>';
+admin_externalpage_setup('tool_clearbackupfiles');
 
-if (!$backupfiles) {
-    print '<p>There are no backup files.</p>';
-    return;
+$context = context_system::instance();
+
+$PAGE->set_context($context);
+$PAGE->set_url(new moodle_url('/admin/tool/clearbackupfiles/index.php'));
+$PAGE->set_title(get_string('pluginname', 'tool_clearbackupfiles'));
+$PAGE->set_pagelayout('admin');
+
+echo $OUTPUT->header();
+echo $OUTPUT->heading(get_string('pluginname', 'tool_clearbackupfiles'));
+
+$clearfileprocesser = new tool_clearbackupfiles_processer();
+$clearfileprocesser->execute();
+
+$files = $clearfileprocesser->get_deleted_files();
+$filecount = count($files);
+
+if ($filecount) {
+    $data = array();
+    foreach ($files as $file) {
+        $line = array();
+        $line[] = $file->name;
+        $line[] = $clearfileprocesser->format_bytes($file->size);
+        $data[] = $line;
+    }
+
+    $table = new html_table();
+    $table->head  = array(
+        get_string('filename', 'tool_clearbackupfiles'),
+        get_string('filesize', 'tool_clearbackupfiles')
+    );
+    $table->size  = array('60%', '40%');
+    $table->align = array('left', 'left');
+    $table->data  = $data;
+
+    $a = new StdClass();
+    $a->filecount = $filecount;
+    $filesize = $clearfileprocesser->get_total_file_size();
+    $a->filesize = tool_clearbackupfiles_processer::format_bytes($filesize);
+
+    echo html_writer::tag('p', get_string('filedeletedheader', 'tool_clearbackupfiles'));
+    echo html_writer::table($table);
+    echo html_writer::tag('p', get_string('filedeletedfooter', 'tool_clearbackupfiles', $a));
+} else {
+    echo html_writer::tag('p', get_string('filedeletedempty', 'tool_clearbackupfiles'));
 }
 
-print '<p>The deleted course backup files during this operation are as follows: </p>';
-
-$i = 0;
-$filesize = 0;
-foreach ($backupfiles as $key => $filedata) {
-    $fs = get_file_storage();
-    $file = $fs->get_file_by_hash($filedata->pathnamehash);
-    $file->delete();
-    $i++;
-    $filesize+ = $file->get_filesize();
-    \tool_clearbackupfiles\event\coursebackup_removed::create(array('other' => array(
-        'filename' => $file->get_filename(),
-        'filesize' => formatBytes($file->get_filesize())
-    )))->trigger();
-    print "<i> Filename: ".$file->get_filename()." Filesize:".formatBytes($file->get_filesize())."</i></br>";
-
-}
-\tool_clearbackupfiles\event\clearbackup_completed::create(array('other' => array(
-    'filecount' => $i,
-    'filesize' => formatBytes($filesize)
-)))->trigger();
-print "<p>In total, ".$i." backup files were deleted and ".formatBytes($filesize).' of server space was cleared.';
-
-function formatBytes($size, $precision = 2) {
-    $base = log($size, 1024);
-    $suffixes = array('', 'KB', 'MB', 'GB', 'TB');
-    return round(pow(1024, $base - floor($base)), $precision) . $suffixes[floor($base)];
-}
+echo $OUTPUT->footer();

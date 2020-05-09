@@ -23,6 +23,8 @@
  */
 namespace tool_clearbackupfiles\event;
 
+use stdClass;
+
 /**
  * The tool_capability report viewed event class.
  *
@@ -59,7 +61,11 @@ class coursebackup_removed extends \core\event\base {
      * @return string
      */
     public function get_description() {
-        return "Course backup file '".$this->other['filename']."' of size ".$this->other['filesize']." was deleted.";
+        $a = new stdClass();
+        $a->filename = $this->other['filename'];
+        $a->filesize = $this->other['filesize'];
+
+        return get_string('backupremovedlog', 'tool_clearbackupfiles');
     }
 
     /**
