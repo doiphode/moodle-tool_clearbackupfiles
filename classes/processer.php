@@ -71,7 +71,7 @@ class tool_clearbackupfiles_processer {
     private function get_backup_files() {
         global $DB;
 
-        $backupfiles = $DB->get_records_sql("SELECT * from mdl_files sq where sq.mimetype like '%backup%'");
+        $backupfiles = $DB->get_records_sql("SELECT * from {files} sq where sq.mimetype like '%backup%'");
         return $backupfiles;
     }
 

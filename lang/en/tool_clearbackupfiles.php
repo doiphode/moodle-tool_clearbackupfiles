@@ -20,13 +20,17 @@
  * @copyright  2015 Shubhendra Doiphode
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-$string['pluginname'] = 'Clear Backup Files';
+$string['pluginname'] = 'Clear backup files';
 $string['coursebackupremoved'] = 'Course backup deleted';
 $string['backupremovedlog'] = 'Course backup file {$a->filename} of size {$a->filesize} was deleted.';
 $string['clearbackupcompleted'] = 'Clear backup completed';
 $string['backupcompletedlog'] = 'During this operation {$a->filecount} course backup files of total size {$a->filesize} were deleted.';
-$string['filename'] = 'File Name';
-$string['filesize'] = 'File Size';
+$string['filename'] = 'File name';
+$string['filesize'] = 'File size';
 $string['filedeletedheader'] = 'The course backup files deleted during this operation are as follows:';
 $string['filedeletedfooter'] = 'In total {$a->filecount} backup files were deleted and {$a->filesize} of server space was cleared.';
 $string['filedeletedempty'] = 'There are no backup files to delete.';
+
+$string['warningmsg'] = 'Please note, clearing of backup files is an irreversible process, you will not be able to restore deleted backup files.';
+$string['warningalert'] = 'Are you sure you want to proceed?';
+$string['proceed'] = 'Proceed';

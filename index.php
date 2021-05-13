@@ -36,6 +36,15 @@ $PAGE->set_pagelayout('admin');
 echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('pluginname', 'tool_clearbackupfiles'));
 
+if (!isset($_POST['btnsubmit'])) {
+echo get_string('warningmsg', 'tool_clearbackupfiles');
+echo '<form action="index.php" method="post" onsubmit="return confirm(\'' . get_string('warningalert', 'tool_clearbackupfiles') . '\');">';
+echo '<br/>';
+echo '<input type="submit" name="btnsubmit" value="' . get_string('proceed', 'tool_clearbackupfiles') . '">';
+echo '</form>';
+} else {
+
+
 $clearfileprocesser = new tool_clearbackupfiles_processer();
 $clearfileprocesser->execute();
 
@@ -46,7 +55,7 @@ if ($filecount) {
     $data = array();
     foreach ($files as $file) {
         $line = array();
-        $line[] = $file->name;
+        $line[] = $file->name;	
         $line[] = $clearfileprocesser->format_bytes($file->size);
         $data[] = $line;
     }
@@ -71,5 +80,5 @@ if ($filecount) {
 } else {
     echo html_writer::tag('p', get_string('filedeletedempty', 'tool_clearbackupfiles'));
 }
-
+}
 echo $OUTPUT->footer();
