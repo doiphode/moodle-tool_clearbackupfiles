@@ -32,5 +32,4 @@ $string['filedeletedfooter'] = 'In total {$a->filecount} backup files were delet
 $string['filedeletedempty'] = 'There are no backup files to delete.';
 
 $string['warningmsg'] = 'Please note, clearing of backup files is an irreversible process, you will not be able to restore deleted backup files.';
-$string['warningalert'] = 'Are you sure you want to proceed?';
-$string['proceed'] = 'Proceed';
+$string['warningalert'] = 'Are you sure you want to continue?';
