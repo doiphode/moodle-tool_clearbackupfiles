@@ -45,6 +45,8 @@ class tool_clearbackupfiles_processer {
             $file->name = $backupfile->get_filename();
             $file->size = $backupfile->get_filesize();
 
+
+            $this->clearedfiles = array();
             $this->deletedfiles[] = $file;
             $this->totalfilesize += $file->size;
 
