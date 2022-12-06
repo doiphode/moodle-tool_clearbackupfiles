@@ -20,8 +20,10 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+define('CLI_SCRIPT', true);
 
 require(__DIR__ . '/../../../config.php');
+
 require_once($CFG->libdir . '/adminlib.php');
 require_once($CFG->libdir . '/filestorage/file_storage.php');
 require_once("$CFG->libdir/formslib.php");
