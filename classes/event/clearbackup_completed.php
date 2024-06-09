@@ -25,14 +25,6 @@ namespace tool_clearbackupfiles\event;
 
 use stdClass;
 
-/**
- * The tool_capability report viewed event class.
- *
- * @package    tool_clearbackupfiles
- * @since      Moodle 2.7
- * @copyright  2015 Shubhendra Doiphode (doiphode.sunny@gmail.com)
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
 class clearbackup_completed extends \core\event\base {
 
     /**

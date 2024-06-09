@@ -23,12 +23,29 @@
 defined('MOODLE_INTERNAL') || die;
 
 if ($hassiteconfig) {
-    $ADMIN->add(
-        'backups',
-        new admin_externalpage(
-            'tool_clearbackupfiles',
-            get_string('pluginname', 'tool_clearbackupfiles'),
-            new moodle_url('/admin/tool/clearbackupfiles/index.php')
+    // Create the new settings page.
+    $settings = new admin_settingpage('tool_clearbackupfiles', get_string('pluginname', 'tool_clearbackupfiles'));
+
+    // Add a setting for a numeric input field.
+    $settings->add(new admin_setting_configtext(
+        'tool_clearbackupfiles/days', // This is the setting name.
+        get_string('days', 'tool_clearbackupfiles'), // This is the setting title.
+        get_string('daysdesc', 'tool_clearbackupfiles'), // This is the setting description.
+        5, // Default value.
+        PARAM_INT // Type of the parameter.
+    ));
+
+    // Add the anchor tag that opens in a new tab and is styled as a button
+    $settings->add(new admin_setting_heading(
+        'tool_clearbackupfiles/buttonheading',
+        '',
+        html_writer::link(
+            new moodle_url('/admin/tool/clearbackupfiles/index.php'),
+            get_string('continuetoclearbackup','tool_clearbackupfiles'),
+            array('class' => 'btn btn-primary', 'target' => '_blank')
         )
-    );
+    ));
+
+    // Add the settings page to the tools category.
+    $ADMIN->add('tools', $settings);
 }
