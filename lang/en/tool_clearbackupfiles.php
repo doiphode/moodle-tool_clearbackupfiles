@@ -33,3 +33,6 @@ $string['filedeletedempty'] = 'There are no backup files to delete.';
 
 $string['warningmsg'] = 'Please note, clearing of backup files is an irreversible process, you will not be able to restore deleted backup files.';
 $string['warningalert'] = 'Are you sure you want to continue?';
+$string['days'] = 'Days';
+$string['daysdesc'] = 'Number of days of backup to clear';
+$string['continuetoclearbackup'] = 'Continue to clear backup';

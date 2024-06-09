@@ -23,7 +23,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2022120600;
+$plugin->version   = 2022120604;
 $plugin->requires  = 2016110800;
 $plugin->component = 'tool_clearbackupfiles';
 $plugin->release = '3.9, release 1';
