@@ -45,7 +45,7 @@ class cron_task extends \core\task\scheduled_task {
         $cutofftimestamp = time() - ($days * 24 * 60 * 60);
 
         // Fetch files from the last specified number of days
-        $sql = "SELECT * FROM {files} WHERE mimetype LIKE '%backup%' AND timecreated >= :cutofftimestamp";
+        $sql = "SELECT * FROM {files} WHERE mimetype LIKE '%backup%' AND timecreated <= :cutofftimestamp";
         $params = array('cutofftimestamp' => $cutofftimestamp);
 
         $backupfiles = $DB->get_records_sql($sql, $params);

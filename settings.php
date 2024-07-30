@@ -21,6 +21,17 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
+/*
+if ($hassiteconfig) {
+   $ADMIN->add(
+        'backups',
+        new admin_externalpage(
+            'tool_clearbackupfiles',
+            get_string('pluginname', 'tool_clearbackupfiles'),
+            new moodle_url('/admin/tool/clearbackupfiles/index.php')
+        )
+    ); 
+} */
 
 if ($hassiteconfig) {
     // Create the new settings page.
