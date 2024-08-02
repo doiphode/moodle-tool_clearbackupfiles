@@ -36,3 +36,5 @@ $string['warningalert'] = 'Are you sure you want to continue?';
 $string['days'] = 'Days';
 $string['daysdesc'] = 'Number of days of backup to clear';
 $string['continuetoclearbackup'] = 'Continue to clear backup';
+$string['enablecron'] = 'Enable CRON';
+$string['enablecrondesc'] = '';

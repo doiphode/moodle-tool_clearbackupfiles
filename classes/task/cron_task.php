@@ -20,21 +20,30 @@ class cron_task extends \core\task\scheduled_task {
 
         $toolconfig = get_config('tool_clearbackupfiles');
         $days = $toolconfig->days;
-        
-        $backupfiles = $this->get_backup_files($days);
-        
-        if (!$backupfiles) {
-            return null;
+        $enablecron = 0;
+        if(isset($toolconfig->enablecron)){
+            $enablecron = $toolconfig->enablecron;
         }
 
-        $filestorage = get_file_storage();
+        if($enablecron == 1){
+            $backupfiles = $this->get_backup_files($days);
+        
+            if (!$backupfiles) {
+                return null;
+            }
 
-        foreach ($backupfiles as $filedata) {
-            $backupfile = $filestorage->get_file_by_hash($filedata->pathnamehash);
-            $backupfile->delete();
-        }
+            $filestorage = get_file_storage();
 
-        mtrace('Delete backup files.'.'\n');
+            foreach ($backupfiles as $filedata) {
+                $backupfile = $filestorage->get_file_by_hash($filedata->pathnamehash);
+                $backupfile->delete();
+            }
+
+            mtrace('Delete backup files.'.'\n');
+        }else{
+            mtrace("Delete backup CRON not executed");
+        }        
+        
         return true; // Finished OK.
     }
 
