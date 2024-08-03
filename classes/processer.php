@@ -25,6 +25,9 @@ defined('MOODLE_INTERNAL') || die();
 
 class tool_clearbackupfiles_processer {
 
+    /**
+     * @var array Contains the deleted files.
+     */
     private $deletedfiles = array();
     private $totalfilesize = 0;
 
