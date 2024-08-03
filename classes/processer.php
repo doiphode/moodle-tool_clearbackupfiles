@@ -54,13 +54,13 @@ class tool_clearbackupfiles_processer {
 
             \tool_clearbackupfiles\event\coursebackup_removed::create(array('other' => array(
                 'filename' => $file->name,
-                'filesize' => self::format_bytes($file->size)
+                'filesize' => self::format_bytes($file->size),
             )))->trigger();
         }
 
         \tool_clearbackupfiles\event\clearbackup_completed::create(array('other' => array(
             'filecount' => count($this->deletedfiles),
-            'filesize' => self::format_bytes($this->totalfilesize)
+            'filesize' => self::format_bytes($this->totalfilesize),
         )))->trigger();
     }
 
