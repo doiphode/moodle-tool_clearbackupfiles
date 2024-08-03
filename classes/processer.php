@@ -79,6 +79,11 @@ class tool_clearbackupfiles_processer {
         )))->trigger();
     }
 
+    /**
+     * Returns the information of the deleted files.
+     *
+     * @return array An array of stdClass objects
+     */
     public function get_deleted_files() {
         return $this->deletedfiles;
     }
