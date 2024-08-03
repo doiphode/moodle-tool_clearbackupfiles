@@ -117,6 +117,13 @@ class tool_clearbackupfiles_processer {
         return $backupfiles;
     }
 
+    /**
+     * Formats file size values into a human-readable form.
+     *
+     * @param int $size The file size in bytes
+     * @param int $precision The number of digits to round to
+     * @return float The human-readable file size
+     */
     public static function format_bytes($size, $precision = 2) {
         $base = log($size, 1024);
         $suffixes = array('', 'KB', 'MB', 'GB', 'TB');
