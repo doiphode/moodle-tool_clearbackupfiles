@@ -22,14 +22,14 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
- 
+
 class tool_clearbackupfiles_processer {
 
     private $deletedfiles = array();
     private $totalfilesize = 0;
 
     public function execute() {
-        
+
         $toolconfig = get_config('tool_clearbackupfiles');
         $days = $toolconfig->days;
 
@@ -77,7 +77,7 @@ class tool_clearbackupfiles_processer {
 
         // Calculate the timestamp for the cutoff date
         $cutofftimestamp = time() - ($days * 24 * 60 * 60);
-      
+
         // Fetch files from the last specified number of days
         $sql = "SELECT * FROM {files} WHERE mimetype LIKE '%backup%' AND timecreated <= :cutofftimestamp";
         $params = array('cutofftimestamp' => $cutofftimestamp);
