@@ -15,14 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details.
+ * Handles the deletion of backup files.
+ *
  * @package    tool_clearbackupfiles
  * @copyright  2015 Shubhendra Doiphode
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
-/**
- * Handles the deletion of backup files.
  */
 class tool_clearbackupfiles_processer {
 
