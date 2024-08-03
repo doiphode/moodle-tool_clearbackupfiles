@@ -23,6 +23,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Handles the deletion of backup files.
+ */
 class tool_clearbackupfiles_processer {
 
     /**
