@@ -29,6 +29,10 @@ class tool_clearbackupfiles_processer {
      * @var array Contains the deleted files.
      */
     private $deletedfiles = array();
+
+    /**
+     * @var int The total size of deleted files in bytes
+     */
     private $totalfilesize = 0;
 
     public function execute() {
