@@ -38,6 +38,11 @@ class tool_clearbackupfiles_processer {
      */
     private $totalfilesize = 0;
 
+    /**
+     * Erases the backup files.
+     *
+     * @return void
+     */
     public function execute() {
 
         $toolconfig = get_config('tool_clearbackupfiles');
