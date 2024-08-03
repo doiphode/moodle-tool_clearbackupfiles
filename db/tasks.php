@@ -1,8 +1,8 @@
 <?php 
 
 defined('MOODLE_INTERNAL') || die();
-$tasks = array(
-    array(
+$tasks = [
+    [
         'classname' => '\tool_clearbackupfiles\task\cron_task',
         'blocking' => 0,
         'minute' => '*',
@@ -10,5 +10,5 @@ $tasks = array(
         'day' => '*',
         'month' => '*',
         'dayofweek' => '*',
-    ),
-);
+    ],
+];
