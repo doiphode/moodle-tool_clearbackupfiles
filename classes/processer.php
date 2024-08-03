@@ -97,6 +97,12 @@ class tool_clearbackupfiles_processer {
         return $this->totalfilesize;
     }
 
+    /**
+     * Returns the backup files that are older than $days days
+     *
+     * @param int $days
+     * @return array
+     */
     private function get_backup_files($days) {
         global $DB;
 
