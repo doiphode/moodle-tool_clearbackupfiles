@@ -29,7 +29,7 @@ class tool_clearbackupfiles_processer {
     /**
      * @var array Contains the deleted files.
      */
-    private $deletedfiles = array();
+    private $deletedfiles = [];
 
     /**
      * @var int The total size of deleted files in bytes
@@ -65,16 +65,16 @@ class tool_clearbackupfiles_processer {
             $this->deletedfiles[] = $file;
             $this->totalfilesize += $file->size;
 
-            \tool_clearbackupfiles\event\coursebackup_removed::create(array('other' => array(
+            \tool_clearbackupfiles\event\coursebackup_removed::create(['other' => [
                 'filename' => $file->name,
                 'filesize' => self::format_bytes($file->size),
-            )))->trigger();
+            ]])->trigger();
         }
 
-        \tool_clearbackupfiles\event\clearbackup_completed::create(array('other' => array(
+        \tool_clearbackupfiles\event\clearbackup_completed::create(['other' => [
             'filecount' => count($this->deletedfiles),
             'filesize' => self::format_bytes($this->totalfilesize),
-        )))->trigger();
+        ]])->trigger();
     }
 
     /**
@@ -109,7 +109,7 @@ class tool_clearbackupfiles_processer {
 
         // Fetch files from the last specified number of days
         $sql = "SELECT * FROM {files} WHERE mimetype LIKE '%backup%' AND timecreated <= :cutofftimestamp";
-        $params = array('cutofftimestamp' => $cutofftimestamp);
+        $params = ['cutofftimestamp' => $cutofftimestamp];
 
         $backupfiles = $DB->get_records_sql($sql, $params);
         return $backupfiles;
@@ -124,7 +124,7 @@ class tool_clearbackupfiles_processer {
      */
     public static function format_bytes($size, $precision = 2) {
         $base = log($size, 1024);
-        $suffixes = array('', 'KB', 'MB', 'GB', 'TB');
+        $suffixes = ['', 'KB', 'MB', 'GB', 'TB'];
         return round(pow(1024, $base - floor($base)), $precision) . $suffixes[floor($base)];
     }
 }
