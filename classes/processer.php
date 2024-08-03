@@ -88,6 +88,11 @@ class tool_clearbackupfiles_processer {
         return $this->deletedfiles;
     }
 
+    /**
+     * Returns the total size of the deleted files in bytes
+     *
+     * @return int
+     */
     public function get_total_file_size() {
         return $this->totalfilesize;
     }
