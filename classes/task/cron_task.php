@@ -37,8 +37,6 @@ class cron_task extends \core\task\scheduled_task {
      * Run assignment cron.
      */
     public function execute() {
-        global $DB,$USER;
-
         $toolconfig = get_config('tool_clearbackupfiles');
         $days = $toolconfig->days;
         $enablecron = 0;
