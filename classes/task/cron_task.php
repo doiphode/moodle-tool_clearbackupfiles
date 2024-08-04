@@ -40,11 +40,11 @@ class cron_task extends \core\task\scheduled_task {
         $toolconfig = get_config('tool_clearbackupfiles');
         $days = $toolconfig->days;
         $enablecron = 0;
-        if(isset($toolconfig->enablecron)){
+        if (isset($toolconfig->enablecron)) {
             $enablecron = $toolconfig->enablecron;
         }
 
-        if($enablecron == 1){
+        if ($enablecron == 1) {
             $backupfiles = $this->get_backup_files($days);
         
             if (!$backupfiles) {
@@ -59,7 +59,7 @@ class cron_task extends \core\task\scheduled_task {
             }
 
             mtrace('Delete backup files.'.'\n');
-        }else{
+        } else {
             mtrace("Delete backup CRON not executed");
         }        
         
