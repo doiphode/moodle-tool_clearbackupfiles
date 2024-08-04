@@ -15,7 +15,6 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace tool_clearbackupfiles\task;
-defined('MOODLE_INTERNAL') || die();
 
 class cron_task extends \core\task\scheduled_task {
     /**
