@@ -80,7 +80,7 @@ class cron_task extends \core\task\scheduled_task {
 
         // Fetch files from the last specified number of days.
         $sql = "SELECT * FROM {files} WHERE mimetype LIKE '%backup%' AND timecreated <= :cutofftimestamp";
-        $params = array('cutofftimestamp' => $cutofftimestamp);
+        $params = ['cutofftimestamp' => $cutofftimestamp];
 
         $backupfiles = $DB->get_records_sql($sql, $params);
         return $backupfiles;
