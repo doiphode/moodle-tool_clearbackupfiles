@@ -16,6 +16,13 @@
 
 namespace tool_clearbackupfiles\task;
 
+/**
+ * Scheduled task definition to delete backup files.
+ *
+ * @package    tool_clearbackupfiles
+ * @copyright  2015 Shubhendra Doiphode
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class cron_task extends \core\task\scheduled_task {
     /**
      * Get a descriptive name for this task (shown to admins).
