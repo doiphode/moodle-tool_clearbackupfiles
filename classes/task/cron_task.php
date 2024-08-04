@@ -66,6 +66,12 @@ class cron_task extends \core\task\scheduled_task {
         return true; // Finished OK.
     }
 
+    /**
+     * Gets the backup files to be deleted older than $days.
+     *
+     * @param int $days The cut off amount of days
+     * @return stdClass[]
+     */
     private function get_backup_files($days) {
         global $DB;
 
