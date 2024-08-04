@@ -34,8 +34,7 @@ class tool_clearbackupfiles_processer {
         $days = $toolconfig->days;
 
         $backupfiles = $this->get_backup_files($days);
-        echo "<pre>";
-        print_r($backupfiles);die;
+
         if (!$backupfiles) {
             return null;
         }
