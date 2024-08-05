@@ -1,3 +1,5 @@
+![Moodle Plugin CI](https://github.com/doiphode/moodle-tool_clearbackupfiles/actions/workflows/moodle-ci.yml/badge.svg)
+
 # tool_clearbackupfiles
 
 This admin tool clears all backup files from the server. It is useful for freeing up space from dev and test servers once they are refreshed from production.
