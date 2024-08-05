@@ -46,7 +46,7 @@ if ($hassiteconfig) {
         PARAM_INT // Type of the parameter.
     ));
 
-    // Add a checkbox for enabling/disabling CRON
+    // Add a checkbox for enabling/disabling CRON.
     $settings->add(new admin_setting_configcheckbox(
         'tool_clearbackupfiles/enablecron', // This is the setting name.
         get_string('enablecron', 'tool_clearbackupfiles'), // This is the setting title.
@@ -54,7 +54,7 @@ if ($hassiteconfig) {
         0 // Default value (0 for unchecked, 1 for checked).
     ));
 
-    // Add the anchor tag that opens in a new tab and is styled as a button
+    // Add the anchor tag that opens in a new tab and is styled as a button.
     $settings->add(new admin_setting_heading(
         'tool_clearbackupfiles/buttonheading',
         '',
