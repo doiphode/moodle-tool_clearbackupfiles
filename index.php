@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Starting point.
+ *
  * @package    tool_clearbackupfiles
  * @copyright  2015 Shubhendra Doiphode
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -30,7 +32,7 @@ require_once("$CFG->libdir/formslib.php");
 
 require_once("$CFG->dirroot/admin/tool/clearbackupfiles/confirm_form.php");
 
-//admin_externalpage_setup('tool_clearbackupfiles');
+// admin_externalpage_setup('tool_clearbackupfiles');
 
 $context = context_system::instance();
 
@@ -42,18 +44,15 @@ $PAGE->set_pagelayout('admin');
 echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('pluginname', 'tool_clearbackupfiles'));
 
-$submitbutton = optional_param('submitbutton','', PARAM_TEXT);
-$cancelbutton = optional_param('cancel','', PARAM_TEXT);
-$dlt = optional_param('dlt',0, PARAM_INT);
-
-
+$submitbutton = optional_param('submitbutton', '', PARAM_TEXT);
+$cancelbutton = optional_param('cancel', '', PARAM_TEXT);
+$dlt = optional_param('dlt', 0, PARAM_INT);
 
 $returnurl = new moodle_url($CFG->wwwroot);
 
-
 $mform = new confirm_form();
 
-if ($submitbutton=='' && $dlt==0 && $cancelbutton!='Cancel') {
+if ($submitbutton == '' && $dlt == 0 && $cancelbutton != 'Cancel') {
     $mform->display();
 }
 
@@ -64,13 +63,13 @@ if ($mform->is_cancelled()) {
     echo $OUTPUT->confirm(get_string('warningalert', 'tool_clearbackupfiles'), $CFG->wwwroot . '/admin/tool/clearbackupfiles/index.php?dlt=1', $CFG->wwwroot . '/admin/tool/clearbackupfiles/index.php');
 
 }
-//echo get_string('warningmsg', 'tool_clearbackupfiles');
-//echo '<form action="index.php" method="post" onsubmit="return confirm(\'' . get_string('warningalert', 'tool_clearbackupfiles') . '\');">';
-//echo '<br/>';
-//echo '<input type="submit" name="btnsubmit" value="' . get_string('proceed', 'tool_clearbackupfiles') . '">';
-//echo '</form>';
+// echo get_string('warningmsg', 'tool_clearbackupfiles');
+// echo '<form action="index.php" method="post" onsubmit="return confirm(\'' . get_string('warningalert', 'tool_clearbackupfiles') . '\');">';
+// echo '<br/>';
+// echo '<input type="submit" name="btnsubmit" value="' . get_string('proceed', 'tool_clearbackupfiles') . '">';
+// echo '</form>';
 
-if ($dlt==1) {
+if ($dlt == 1) {
     $clearfileprocesser = new tool_clearbackupfiles_processer();
     $clearfileprocesser->execute();
 
@@ -78,21 +77,21 @@ if ($dlt==1) {
     $filecount = count($files);
 
     if ($filecount) {
-        $data = array();
+        $data = [];
         foreach ($files as $file) {
-            $line = array();
+            $line = [];
             $line[] = $file->name;
             $line[] = $clearfileprocesser->format_bytes($file->size);
             $data[] = $line;
         }
 
         $table = new html_table();
-        $table->head = array(
+        $table->head = [
             get_string('filename', 'tool_clearbackupfiles'),
-            get_string('filesize', 'tool_clearbackupfiles')
-        );
-        $table->size = array('60%', '40%');
-        $table->align = array('left', 'left');
+            get_string('filesize', 'tool_clearbackupfiles'),
+        ];
+        $table->size = ['60%', '40%'];
+        $table->align = ['left', 'left'];
         $table->data = $data;
 
         $a = new StdClass();
