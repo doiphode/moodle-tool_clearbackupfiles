@@ -89,7 +89,7 @@ if ($dlt == 1) {
         $table = new html_table();
         $table->head = [
             get_string('filename', 'tool_clearbackupfiles'),
-            get_string('filesize', 'tool_clearbackupfiles')
+            get_string('filesize', 'tool_clearbackupfiles'),
         ];
         $table->size = ['60%', '40%'];
         $table->align = ['left', 'left'];
