@@ -32,7 +32,7 @@ require_once("$CFG->libdir/formslib.php");
 
 require_once("$CFG->dirroot/admin/tool/clearbackupfiles/confirm_form.php");
 
-//admin_externalpage_setup('tool_clearbackupfiles');
+// admin_externalpage_setup('tool_clearbackupfiles');
 
 $context = context_system::instance();
 
@@ -64,11 +64,11 @@ if ($mform->is_cancelled()) {
     echo $OUTPUT->confirm(get_string('warningalert', 'tool_clearbackupfiles'), $CFG->wwwroot . '/admin/tool/clearbackupfiles/index.php?dlt=1', $CFG->wwwroot . '/admin/tool/clearbackupfiles/index.php');
 
 }
-//echo get_string('warningmsg', 'tool_clearbackupfiles');
-//echo '<form action="index.php" method="post" onsubmit="return confirm(\'' . get_string('warningalert', 'tool_clearbackupfiles') . '\');">';
-//echo '<br/>';
-//echo '<input type="submit" name="btnsubmit" value="' . get_string('proceed', 'tool_clearbackupfiles') . '">';
-//echo '</form>';
+// echo get_string('warningmsg', 'tool_clearbackupfiles');
+// echo '<form action="index.php" method="post" onsubmit="return confirm(\'' . get_string('warningalert', 'tool_clearbackupfiles') . '\');">';
+// echo '<br/>';
+// echo '<input type="submit" name="btnsubmit" value="' . get_string('proceed', 'tool_clearbackupfiles') . '">';
+// echo '</form>';
 
 if ($dlt == 1) {
     $clearfileprocesser = new tool_clearbackupfiles_processer();
