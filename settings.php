@@ -61,7 +61,7 @@ if ($hassiteconfig) {
         html_writer::link(
             new moodle_url('/admin/tool/clearbackupfiles/index.php'),
             get_string('continuetoclearbackup', 'tool_clearbackupfiles'),
-            ['class' => 'btn btn-primary', 'target' => '_blank']
+            ['class' => 'btn btn-primary', 'target' => '_blank'],
         )
     ));
 
