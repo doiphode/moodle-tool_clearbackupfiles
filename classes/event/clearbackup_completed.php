@@ -74,7 +74,6 @@ class clearbackup_completed extends \core\event\base {
      * @return array
      */
     protected function get_legacy_logdata() {
-        return array(SITEID, 'admin', 'course backup deleted', '');
+        return [SITEID, 'admin', 'course backup deleted', ''];
     }
 }
-
