@@ -30,7 +30,7 @@ if ($hassiteconfig) {
             get_string('pluginname', 'tool_clearbackupfiles'),
             new moodle_url('/admin/tool/clearbackupfiles/index.php')
         )
-    ); 
+    );
 } */
 
 if ($hassiteconfig) {
