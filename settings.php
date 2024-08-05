@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Admin settings page definition.
+ *
  * @package    tool_clearbackupfiles
  * @copyright  2015 Shubhendra Doiphode
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -30,7 +32,7 @@ if ($hassiteconfig) {
             get_string('pluginname', 'tool_clearbackupfiles'),
             new moodle_url('/admin/tool/clearbackupfiles/index.php')
         )
-    ); 
+    );
 } */
 
 if ($hassiteconfig) {
@@ -46,7 +48,7 @@ if ($hassiteconfig) {
         PARAM_INT // Type of the parameter.
     ));
 
-    // Add a checkbox for enabling/disabling CRON
+    // Add a checkbox for enabling/disabling CRON.
     $settings->add(new admin_setting_configcheckbox(
         'tool_clearbackupfiles/enablecron', // This is the setting name.
         get_string('enablecron', 'tool_clearbackupfiles'), // This is the setting title.
@@ -54,14 +56,14 @@ if ($hassiteconfig) {
         0 // Default value (0 for unchecked, 1 for checked).
     ));
 
-    // Add the anchor tag that opens in a new tab and is styled as a button
+    // Add the anchor tag that opens in a new tab and is styled as a button.
     $settings->add(new admin_setting_heading(
         'tool_clearbackupfiles/buttonheading',
         '',
         html_writer::link(
             new moodle_url('/admin/tool/clearbackupfiles/index.php'),
-            get_string('continuetoclearbackup','tool_clearbackupfiles'),
-            array('class' => 'btn btn-primary', 'target' => '_blank')
+            get_string('continuetoclearbackup', 'tool_clearbackupfiles'),
+            ['class' => 'btn btn-primary', 'target' => '_blank'],
         )
     ));
 
