@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Admin settings page definition.
+ *
  * @package    tool_clearbackupfiles
  * @copyright  2015 Shubhendra Doiphode
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
