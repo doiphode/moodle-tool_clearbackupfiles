@@ -42,11 +42,9 @@ $PAGE->set_pagelayout('admin');
 echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('pluginname', 'tool_clearbackupfiles'));
 
-$submitbutton = optional_param('submitbutton','', PARAM_TEXT);
-$cancelbutton = optional_param('cancel','', PARAM_TEXT);
-$dlt = optional_param('dlt',0, PARAM_INT);
-
-
+$submitbutton = optional_param('submitbutton', '', PARAM_TEXT);
+$cancelbutton = optional_param('cancel', '', PARAM_TEXT);
+$dlt = optional_param('dlt', 0, PARAM_INT);
 
 $returnurl = new moodle_url($CFG->wwwroot);
 
