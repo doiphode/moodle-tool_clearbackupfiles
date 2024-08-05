@@ -50,7 +50,6 @@ $dlt = optional_param('dlt', 0, PARAM_INT);
 
 $returnurl = new moodle_url($CFG->wwwroot);
 
-
 $mform = new confirm_form();
 
 if ($submitbutton == '' && $dlt == 0 && $cancelbutton != 'Cancel') {
