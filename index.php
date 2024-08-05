@@ -78,21 +78,21 @@ if ($dlt == 1) {
     $filecount = count($files);
 
     if ($filecount) {
-        $data = array();
+        $data = [];
         foreach ($files as $file) {
-            $line = array();
+            $line = [];
             $line[] = $file->name;
             $line[] = $clearfileprocesser->format_bytes($file->size);
             $data[] = $line;
         }
 
         $table = new html_table();
-        $table->head = array(
+        $table->head = [
             get_string('filename', 'tool_clearbackupfiles'),
             get_string('filesize', 'tool_clearbackupfiles')
-        );
-        $table->size = array('60%', '40%');
-        $table->align = array('left', 'left');
+        ];
+        $table->size = ['60%', '40%'];
+        $table->align = ['left', 'left'];
         $table->data = $data;
 
         $a = new StdClass();
