@@ -49,8 +49,6 @@ class tool_clearbackupfiles_processer {
             $file->name = $backupfile->get_filename();
             $file->size = $backupfile->get_filesize();
 
-
-            $this->clearedfiles = array();
             $this->deletedfiles[] = $file;
             $this->totalfilesize += $file->size;
 
@@ -61,7 +59,7 @@ class tool_clearbackupfiles_processer {
         }
 
         \tool_clearbackupfiles\event\clearbackup_completed::create(array('other' => array(
-            'filecount' => count($this->clearedfiles),
+            'filecount' => count($this->deletedfiles),
             'filesize' => self::format_bytes($this->totalfilesize)
         )))->trigger();
     }
