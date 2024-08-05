@@ -14,28 +14,23 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-defined('MOODLE_INTERNAL') || die();
-
-require_once("$CFG->libdir/formslib.php");
+namespace tool_componentlibrary\privacy;
 
 /**
- * Class confirm_form
+ * Privacy API implementation
+ *
  * @package   tool_clearbackupfiles
- * @copyright 2015 Shubhendra Doiphode
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright Christian Abila <christian@abila.at>
  */
-class confirm_form extends moodleform {
-
+class provider implements \core_privacy\local\metadata\null_provider {
     /**
-     * Add elements to this form.
+     * Get the language string identifier with the component's language
+     * file to explain why this plugin stores no data.
+     *
+     * @return  string
      */
-    public function definition() {
-        $warningmsg = get_string('warningmsg', 'tool_clearbackupfiles');
-
-        $mform = $this->_form;
-
-        $mform->addElement('html', $warningmsg);
-
-        $this->add_action_buttons(true, get_string('submit'));
+    public static function get_reason(): string {
+        return 'privacy:metadata';
     }
 }

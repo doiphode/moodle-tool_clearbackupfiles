@@ -1,7 +1,28 @@
 <?php
-namespace tool_clearbackupfiles\task;
-defined('MOODLE_INTERNAL') || die();
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+namespace tool_clearbackupfiles\task;
+
+/**
+ * Scheduled task definition to delete backup files.
+ *
+ * @package    tool_clearbackupfiles
+ * @copyright  2015 Shubhendra Doiphode
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class cron_task extends \core\task\scheduled_task {
     /**
      * Get a descriptive name for this task (shown to admins).
@@ -16,18 +37,16 @@ class cron_task extends \core\task\scheduled_task {
      * Run assignment cron.
      */
     public function execute() {
-        global $DB,$USER;
-
         $toolconfig = get_config('tool_clearbackupfiles');
         $days = $toolconfig->days;
         $enablecron = 0;
-        if(isset($toolconfig->enablecron)){
+        if (isset($toolconfig->enablecron)) {
             $enablecron = $toolconfig->enablecron;
         }
 
-        if($enablecron == 1){
+        if ($enablecron == 1) {
             $backupfiles = $this->get_backup_files($days);
-        
+
             if (!$backupfiles) {
                 return null;
             }
@@ -40,22 +59,28 @@ class cron_task extends \core\task\scheduled_task {
             }
 
             mtrace('Delete backup files.'.'\n');
-        }else{
+        } else {
             mtrace("Delete backup CRON not executed");
-        }        
-        
+        }
+
         return true; // Finished OK.
     }
 
+    /**
+     * Gets the backup files to be deleted older than $days.
+     *
+     * @param int $days The cut off amount of days
+     * @return stdClass[]
+     */
     private function get_backup_files($days) {
         global $DB;
 
-        // Calculate the timestamp for the cutoff date
+        // Calculate the timestamp for the cutoff date.
         $cutofftimestamp = time() - ($days * 24 * 60 * 60);
 
-        // Fetch files from the last specified number of days
+        // Fetch files from the last specified number of days.
         $sql = "SELECT * FROM {files} WHERE mimetype LIKE '%backup%' AND timecreated <= :cutofftimestamp";
-        $params = array('cutofftimestamp' => $cutofftimestamp);
+        $params = ['cutofftimestamp' => $cutofftimestamp];
 
         $backupfiles = $DB->get_records_sql($sql, $params);
         return $backupfiles;
