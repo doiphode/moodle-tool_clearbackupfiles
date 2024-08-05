@@ -30,9 +30,6 @@ class confirm_form extends moodleform {
      * Add elements to this form.
      */
     public function definition() {
-
-        global $DB;
-
         $warningmsg = get_string('warningmsg', 'tool_clearbackupfiles');
 
         $mform = $this->_form;
