@@ -53,7 +53,7 @@ $returnurl = new moodle_url($CFG->wwwroot);
 
 $mform = new confirm_form();
 
-if ($submitbutton=='' && $dlt==0 && $cancelbutton!='Cancel') {
+if ($submitbutton == '' && $dlt == 0 && $cancelbutton != 'Cancel') {
     $mform->display();
 }
 
@@ -70,7 +70,7 @@ if ($mform->is_cancelled()) {
 //echo '<input type="submit" name="btnsubmit" value="' . get_string('proceed', 'tool_clearbackupfiles') . '">';
 //echo '</form>';
 
-if ($dlt==1) {
+if ($dlt == 1) {
     $clearfileprocesser = new tool_clearbackupfiles_processer();
     $clearfileprocesser->execute();
 
