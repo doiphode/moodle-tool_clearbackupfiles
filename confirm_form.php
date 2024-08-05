@@ -14,13 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-
 defined('MOODLE_INTERNAL') || die();
 
 require_once("$CFG->libdir/formslib.php");
 
 /**
  * Class confirm_form
+ * @package   tool_clearbackupfiles
+ * @copyright 2015 Shubhendra Doiphode
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class confirm_form extends moodleform {
@@ -29,9 +30,6 @@ class confirm_form extends moodleform {
      * Add elements to this form.
      */
     public function definition() {
-
-        global $DB;
-
         $warningmsg = get_string('warningmsg', 'tool_clearbackupfiles');
 
         $mform = $this->_form;
@@ -39,7 +37,5 @@ class confirm_form extends moodleform {
         $mform->addElement('html', $warningmsg);
 
         $this->add_action_buttons(true, get_string('submit'));
-
     }
-  
 }
