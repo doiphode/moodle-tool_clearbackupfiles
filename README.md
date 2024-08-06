@@ -6,5 +6,5 @@ This admin tool clears all backup files from the server. It is useful for freein
 
 It also gives a report of how many .mbz files were deleted and how much space was cleared.
 
-Instructions:
+## Instructions
 the backup files can be deleted from /admin/tool/clearbackupfiles/index.php and you can find logs at /report/log/index.php. The default moodle events is used to create log entry.
