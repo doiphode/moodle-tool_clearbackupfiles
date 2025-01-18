@@ -61,7 +61,7 @@ if ($mform->is_cancelled()) {
     echo $OUTPUT->confirm(
         get_string('warningalert', 'tool_clearbackupfiles'),
         $CFG->wwwroot . '/admin/tool/clearbackupfiles/index.php?dlt=1',
-        $CFG->wwwroot . '/admin/tool/clearbackupfiles/index.php',
+        $CFG->wwwroot . '/admin/tool/clearbackupfiles/index.php'
     );
 
 }
