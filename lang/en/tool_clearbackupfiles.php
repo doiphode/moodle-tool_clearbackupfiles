@@ -35,11 +35,11 @@ $string['daysdesc'] = 'Number of days of backup to clear';
 $string['enablecron'] = 'Enable CRON';
 $string['enablecrondesc'] = '';
 
- $string['filedeletedempty'] = 'There are no backup files to delete.';
- $string['filedeletedfooter'] = 'In total {$a->filecount} backup files were deleted and {$a->filesize} of server space was cleared.';
- $string['filedeletedheader'] = 'The course backup files deleted during this operation are as follows:';
- $string['filename'] = 'File name';
- $string['filesize'] = 'File size';
+$string['filedeletedempty'] = 'There are no backup files to delete.';
+$string['filedeletedfooter'] = 'In total {$a->filecount} backup files were deleted and {$a->filesize} of server space was cleared.';
+$string['filedeletedheader'] = 'The course backup files deleted during this operation are as follows:';
+$string['filename'] = 'File name';
+$string['filesize'] = 'File size';
 
 $string['pluginname'] = 'Clear backup files';
 
