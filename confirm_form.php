@@ -36,6 +36,6 @@ class confirm_form extends moodleform {
 
         $mform->addElement('html', $warningmsg);
 
-        $this->add_action_buttons(true, get_string('submit'));
+        $this->add_action_buttons(true, get_string('delete'));
     }
 }
