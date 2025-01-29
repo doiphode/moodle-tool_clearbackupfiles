@@ -28,13 +28,13 @@ $string['backupremovedlog'] = 'Course backup file {$a->filename} of size {$a->fi
 $string['clearbackupcompleted'] = 'Clear backup completed';
 $string['continuetoclearbackup'] = 'Continue to clear backup';
 $string['coursebackupremoved'] = 'Course backup deleted';
+$string['crontask'] = 'Clear backup (.mbz) files task';
 
 $string['days'] = 'Days';
 $string['daysdesc'] = 'Number of days of backup to clear';
 
 $string['enablecron'] = 'Enable CRON';
 $string['enablecrondesc'] = '';
-$string['crontask'] = 'Clear backup (.mbz) files task';
 
 $string['filedeletedempty'] = 'There are no backup files to delete.';
 $string['filedeletedfooter'] = 'In total {$a->filecount} backup files were deleted and {$a->filesize} of server space was cleared.';
