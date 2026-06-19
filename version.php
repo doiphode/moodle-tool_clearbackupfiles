@@ -23,8 +23,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2025012900;
+$plugin->version   = 2026061900;
 $plugin->requires  = 2016110800;
 $plugin->component = 'tool_clearbackupfiles';
 $plugin->release = '4.1, release 3';
 $plugin->maturity = MATURITY_STABLE; // This is considered as ready for production sites.
+$plugin->supported = [405, 502];
