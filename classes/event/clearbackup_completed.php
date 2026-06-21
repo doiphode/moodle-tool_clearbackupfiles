@@ -34,7 +34,6 @@ use stdClass;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class clearbackup_completed extends \core\event\base {
-
     /**
      * Init method.
      *
@@ -66,14 +65,5 @@ class clearbackup_completed extends \core\event\base {
         $a->filesize = $this->other['filesize'];
 
         return get_string('backupcompletedlog', 'tool_clearbackupfiles');
-    }
-
-    /**
-     * Return the legacy event log data.
-     *
-     * @return array
-     */
-    protected function get_legacy_logdata() {
-        return [SITEID, 'admin', 'course backup deleted', ''];
     }
 }
