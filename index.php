@@ -57,13 +57,11 @@ if ($submitbutton == '' && $dlt == 0 && $cancelbutton != 'Cancel') {
 if ($mform->is_cancelled()) {
     redirect($returnurl);
 } else if ($formdata = $mform->get_data()) {
-
     echo $OUTPUT->confirm(
         get_string('warningalert', 'tool_clearbackupfiles'),
         $CFG->wwwroot . '/admin/tool/clearbackupfiles/index.php?dlt=1',
         $CFG->wwwroot . '/admin/tool/clearbackupfiles/index.php'
     );
-
 }
 
 if ($dlt == 1) {

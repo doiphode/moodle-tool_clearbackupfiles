@@ -58,7 +58,7 @@ class cron_task extends \core\task\scheduled_task {
                 $backupfile->delete();
             }
 
-            mtrace('Delete backup files.'.'\n');
+            mtrace('Delete backup files.' . '\n');
         } else {
             mtrace("Delete backup CRON not executed");
         }
