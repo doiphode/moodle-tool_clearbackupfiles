@@ -45,7 +45,8 @@ class cron_task extends \core\task\scheduled_task {
         }
 
         if ($enablecron == 1) {
-            $backupfiles = $this->get_backup_files($days);
+            $cutofftimestamp = time() - ($days * DAYSECS);
+            $backupfiles = \tool_clearbackupfiles\backup_file_selector::get_files_older_than($cutofftimestamp);
 
             if (!$backupfiles) {
                 return null;
@@ -64,25 +65,5 @@ class cron_task extends \core\task\scheduled_task {
         }
 
         return true; // Finished OK.
-    }
-
-    /**
-     * Gets the backup files to be deleted older than $days.
-     *
-     * @param int $days The cut off amount of days
-     * @return stdClass[]
-     */
-    private function get_backup_files($days) {
-        global $DB;
-
-        // Calculate the timestamp for the cutoff date.
-        $cutofftimestamp = time() - ($days * 24 * 60 * 60);
-
-        // Fetch files from the last specified number of days.
-        $sql = "SELECT * FROM {files} WHERE mimetype LIKE '%backup%' AND timecreated <= :cutofftimestamp";
-        $params = ['cutofftimestamp' => $cutofftimestamp];
-
-        $backupfiles = $DB->get_records_sql($sql, $params);
-        return $backupfiles;
     }
 }

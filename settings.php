@@ -29,6 +29,12 @@ if ($hassiteconfig) {
     $settings = new admin_settingpage('tool_clearbackupfiles', get_string('pluginname', 'tool_clearbackupfiles'));
 
     // Add a setting for a numeric input field.
+    $settings->add(new admin_setting_heading(
+        'tool_clearbackupfiles/scopedesc',
+        get_string('backupstoragescopeheading', 'tool_clearbackupfiles'),
+        get_string('backupstoragescope', 'tool_clearbackupfiles')
+    ));
+
     $settings->add(new admin_setting_configtext(
         'tool_clearbackupfiles/days', // This is the setting name.
         get_string('days', 'tool_clearbackupfiles'), // This is the setting title.
