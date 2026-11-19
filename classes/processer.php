@@ -98,17 +98,8 @@ class tool_clearbackupfiles_processer {
      * @return array
      */
     private function get_backup_files($days) {
-        global $DB;
-
-        // Calculate the timestamp for the cutoff date.
-        $cutofftimestamp = time() - ($days * 24 * 60 * 60);
-
-        // Fetch files from the last specified number of days.
-        $sql = "SELECT * FROM {files} WHERE mimetype LIKE '%backup%' AND timecreated <= :cutofftimestamp";
-        $params = ['cutofftimestamp' => $cutofftimestamp];
-
-        $backupfiles = $DB->get_records_sql($sql, $params);
-        return $backupfiles;
+        $cutofftimestamp = time() - ($days * DAYSECS);
+        return \tool_clearbackupfiles\backup_file_selector::get_files_older_than($cutofftimestamp);
     }
 
     /**
