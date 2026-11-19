@@ -24,6 +24,8 @@
 
 $string['backupcompletedlog'] = 'During this operation {$a->filecount} course backup files of total size {$a->filesize} were deleted.';
 $string['backupremovedlog'] = 'Course backup file {$a->filename} of size {$a->filesize} was deleted.';
+$string['backupstoragescope'] = 'Cleanup applies only to archives in Moodle backup storage: backup component areas (course, activity, automated, backup) and the user private backup area (user/backup). Files in other areas (for example course overview files) are never selected, even if they use a backup MIME type.';
+$string['backupstoragescopeheading'] = 'Which files are affected';
 
 $string['clearbackupcompleted'] = 'Clear backup completed';
 $string['continuetoclearbackup'] = 'Continue to clear backup';
@@ -32,9 +34,6 @@ $string['crontask'] = 'Clear backup (.mbz) files task';
 
 $string['days'] = 'Days';
 $string['daysdesc'] = 'Delete backup archives stored in Moodle backup file areas that are older than this many days. Uploaded .mbz files in course content areas are not removed.';
-
-$string['backupstoragescopeheading'] = 'Which files are affected';
-$string['backupstoragescope'] = 'Cleanup applies only to archives in Moodle backup storage: backup component areas (course, activity, automated, backup) and the user private backup area (user/backup). Files in other areas (for example course overview files) are never selected, even if they use a backup MIME type.';
 
 $string['enablecron'] = 'Enable CRON';
 $string['enablecrondesc'] = '';

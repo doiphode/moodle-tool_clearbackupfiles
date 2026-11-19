@@ -25,7 +25,6 @@ namespace tool_clearbackupfiles;
  * @covers     \tool_clearbackupfiles\backup_file_selector
  */
 class backup_file_selector_test extends \advanced_testcase {
-
     /**
      * Known backup pools are in scope; arbitrary course uploads are not.
      */
@@ -71,7 +70,7 @@ class backup_file_selector_test extends \advanced_testcase {
         ], 'not a real backup store');
 
         $files = backup_file_selector::get_files_older_than($cutoff);
-        $filenames = array_map(static function($file) {
+        $filenames = array_map(static function ($file) {
             return $file->filename;
         }, $files);
 

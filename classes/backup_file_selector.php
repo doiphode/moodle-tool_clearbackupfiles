@@ -27,7 +27,6 @@ namespace tool_clearbackupfiles;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class backup_file_selector {
-
     /** @var string Core backup component for course/activity/automated archives */
     public const COMPONENT_BACKUP = 'backup';
 
