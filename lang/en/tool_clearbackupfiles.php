@@ -32,11 +32,11 @@ $string['continuetoclearbackup'] = 'Continue to clear backup';
 $string['coursebackupremoved'] = 'Course backup deleted';
 $string['crontask'] = 'Clear backup (.mbz) files task';
 
-$string['days'] = 'Days';
-$string['daysdesc'] = 'Delete backup archives stored in Moodle backup file areas that are older than this many days. Uploaded .mbz files in course content areas are not removed.';
+$string['days'] = 'Retention period (days)';
+$string['daysdesc'] = 'Backup archives that are at least this many days old are deleted. The age is counted from the time the file was created in Moodle file storage, not from the course or activity dates. This value is used by both the manual cleanup page and the scheduled task. A value of 0 or less selects every backup archive, including backups created moments ago. Only Moodle backup file areas are affected; uploaded .mbz files in course content areas are not removed. Deleted backups cannot be restored, so test the value on a staging site first.';
 
-$string['enablecron'] = 'Enable CRON';
-$string['enablecrondesc'] = '';
+$string['enablecron'] = 'Enable scheduled cleanup';
+$string['enablecrondesc'] = 'If enabled, the scheduled task "{$a}" automatically deletes backup archives that reached the retention period each time it runs. Check and adjust how often it runs on the Scheduled tasks admin page. If disabled, the task runs but deletes nothing. The manual cleanup page is always available and does not depend on this setting. Unlike the manual cleanup, the scheduled task shows no report of deleted files and does not log the plugin events.';
 
 $string['filedeletedempty'] = 'There are no backup files to delete.';
 $string['filedeletedfooter'] = 'In total {$a->filecount} backup files were deleted and {$a->filesize} of server space was cleared.';

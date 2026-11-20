@@ -47,15 +47,15 @@ After installation, navigate to:
 
 **Site administration → Plugins → Admin tools → Clear backup files**
 
-| Setting       | Description                                                            | Default |
-|---------------|------------------------------------------------------------------------|---------|
-| **Days**      | Age threshold in days — files older than this value will be deleted.   | `5`     |
-| **Enable CRON** | When enabled, Moodle scheduled tasks run cleanup automatically.      | Off     |
+| Setting | Description | Default |
+|---------|-------------|---------|
+| **Retention period (days)** | Backup archives at least this many days old (counted from file creation in Moodle file storage) are deleted. Used by both the manual cleanup and the scheduled task. `0` or less selects every backup archive. | `5` |
+| **Enable scheduled cleanup** | When enabled, the scheduled task deletes old backup archives automatically. The manual cleanup is always available, independent of this setting. | Off |
 
 ## Usage
 
 1. Go to **Site administration → Plugins → Admin tools → Clear backup files**.
-2. Set the number of days and optionally enable CRON.
+2. Set the retention period and optionally enable the scheduled cleanup.
 3. Click **Continue to clear backup**.
 4. Confirm the warning — this operation is **irreversible**.
 
