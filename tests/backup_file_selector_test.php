@@ -24,7 +24,7 @@ namespace tool_clearbackupfiles;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @covers     \tool_clearbackupfiles\backup_file_selector
  */
-class backup_file_selector_test extends \advanced_testcase {
+final class backup_file_selector_test extends \advanced_testcase {
     /**
      * Known backup pools are in scope; arbitrary course uploads are not.
      */
