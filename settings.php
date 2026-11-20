@@ -25,6 +25,13 @@
 defined('MOODLE_INTERNAL') || die;
 
 if ($hassiteconfig) {
+    // Link the cleanup tool under Site administration > Courses > Backups.
+    $ADMIN->add('backups', new admin_externalpage(
+        'tool_clearbackupfiles_cleanup',
+        get_string('pluginname', 'tool_clearbackupfiles'),
+        new moodle_url('/admin/tool/clearbackupfiles/index.php')
+    ));
+
     // Create the new settings page.
     $settings = new admin_settingpage('tool_clearbackupfiles', get_string('pluginname', 'tool_clearbackupfiles'));
 

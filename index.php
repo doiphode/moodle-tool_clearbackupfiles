@@ -32,12 +32,10 @@ require_once("$CFG->libdir/formslib.php");
 
 require_once("$CFG->dirroot/admin/tool/clearbackupfiles/confirm_form.php");
 
-$context = context_system::instance();
+// Requires login and moodle/site:config; also sets context, URL, layout and the admin nav node.
+admin_externalpage_setup('tool_clearbackupfiles_cleanup');
 
-$PAGE->set_context($context);
-$PAGE->set_url(new moodle_url($CFG->wwwroot . '/admin/tool/clearbackupfiles/index.php'));
 $PAGE->set_title(get_string('pluginname', 'tool_clearbackupfiles'));
-$PAGE->set_pagelayout('admin');
 
 echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('pluginname', 'tool_clearbackupfiles'));
