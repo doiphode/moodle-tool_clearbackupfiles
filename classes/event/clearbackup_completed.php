@@ -21,6 +21,7 @@
  * @copyright  2015 Shubhendra Doiphode
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 namespace tool_clearbackupfiles\event;
 
 use stdClass;
