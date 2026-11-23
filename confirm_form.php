@@ -29,12 +29,42 @@ class confirm_form extends moodleform {
      * Add elements to this form.
      */
     public function definition() {
-        $warningmsg = get_string('warningmsg', 'tool_clearbackupfiles');
-
         $mform = $this->_form;
+        $days = (int) ($this->_customdata['days'] ?? 0);
 
-        $mform->addElement('html', $warningmsg);
+        $mform->addElement('html', html_writer::div(
+            get_string('warningmsg', 'tool_clearbackupfiles'),
+            'alert alert-warning'
+        ));
+
+        $mform->addElement(
+            'date_selector',
+            'cutoffdate',
+            get_string('cutoffdate', 'tool_clearbackupfiles'),
+            ['optional' => true]
+        );
+        $mform->addHelpButton('cutoffdate', 'cutoffdate', 'tool_clearbackupfiles');
+
+        $defaultkey = $days > 0 ? 'cutoffdefault' : 'cutoffdefaultall';
+        $mform->addElement('static', 'cutoffdefault', '', get_string($defaultkey, 'tool_clearbackupfiles', $days));
 
         $this->add_action_buttons(true, get_string('delete'));
+    }
+
+    /**
+     * Validate the optional cutoff date.
+     *
+     * @param array $data Submitted data
+     * @param array $files Submitted files
+     * @return array Errors keyed by element name
+     */
+    public function validation($data, $files) {
+        $errors = parent::validation($data, $files);
+
+        if (!empty($data['cutoffdate']) && $data['cutoffdate'] > time()) {
+            $errors['cutoffdate'] = get_string('cutoffdatefuture', 'tool_clearbackupfiles');
+        }
+
+        return $errors;
     }
 }
