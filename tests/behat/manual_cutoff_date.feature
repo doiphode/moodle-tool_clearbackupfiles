@@ -36,19 +36,15 @@ Feature: Choose a cutoff date for a manual backup cleanup
     Then I should see "The cutoff date must not be in the future."
 
   Scenario: A matching backup is previewed and then deleted
-    Given the following "courses" exist:
-      | fullname | shortname |
-      | Course 1 | C1        |
-    And the following config values are set as admin:
-      | enableasyncbackup | 0 |                       |
-      | days              | 0 | tool_clearbackupfiles |
+    Given the following config values are set as admin:
+      | days | 5 | tool_clearbackupfiles |
+    And a backup file "old_backup.mbz" created "10" days ago exists
+    And a backup file "recent_backup.mbz" created "1" days ago exists
     And I log in as "admin"
-    And I backup "Course 1" course using this options:
-      | Confirmation | Filename | test_backup.mbz |
     And I navigate to "Courses > Backups > Clear backup files" in site administration
-    And I should see "every backup archive is deleted"
     When I press "Delete"
     Then I should see "This permanently deletes 1 backup files"
     And I press "Continue"
-    And I should see "test_backup.mbz"
+    And I should see "old_backup.mbz"
+    And I should not see "recent_backup.mbz"
     And I should see "In total 1 backup files were deleted"
