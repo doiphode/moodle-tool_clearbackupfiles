@@ -51,11 +51,12 @@ if ($hassiteconfig) {
         PARAM_INT // Type of the parameter.
     ));
 
-    // Add a checkbox for enabling/disabling CRON.
+    // Add a checkbox for enabling/disabling the scheduled cleanup task.
     $settings->add(new admin_setting_configcheckbox(
         'tool_clearbackupfiles/enablecron', // This is the setting name.
         get_string('enablecron', 'tool_clearbackupfiles'), // This is the setting title.
-        get_string('enablecrondesc', 'tool_clearbackupfiles'), // This is the setting description.
+        // This is the setting description; it names the scheduled task via the crontask string.
+        get_string('enablecrondesc', 'tool_clearbackupfiles', get_string('crontask', 'tool_clearbackupfiles')),
         0 // Default value (0 for unchecked, 1 for checked).
     ));
 
