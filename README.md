@@ -57,7 +57,9 @@ After installation, navigate to:
 1. Go to **Site administration → Plugins → Admin tools → Clear backup files**.
 2. Set the retention period and optionally enable the scheduled cleanup.
 3. Click **Continue to clear backup**.
-4. Confirm the warning — this operation is **irreversible**.
+4. Optionally enable **Cutoff date** and pick a date; backups created on or before 00:00 of that date are deleted. This overrides the retention period for this run only; the setting and the scheduled task are not changed.
+5. Click **Delete**. The confirmation shows the cutoff date, the number of files and their total size.
+6. Confirm — this operation is **irreversible**.
 
 After cleanup, the plugin displays:
 

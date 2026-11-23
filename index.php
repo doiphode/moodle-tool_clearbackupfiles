@@ -37,34 +37,27 @@ admin_externalpage_setup('tool_clearbackupfiles_cleanup');
 
 $PAGE->set_title(get_string('pluginname', 'tool_clearbackupfiles'));
 
+$pageurl = new moodle_url('/admin/tool/clearbackupfiles/index.php');
+$dlt = optional_param('dlt', 0, PARAM_BOOL);
+
+$mform = new confirm_form(null, ['days' => (int) get_config('tool_clearbackupfiles', 'days')]);
+
+if ($mform->is_cancelled()) {
+    redirect(new moodle_url('/'));
+}
+
 echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('pluginname', 'tool_clearbackupfiles'));
 
-$submitbutton = optional_param('submitbutton', '', PARAM_TEXT);
-$cancelbutton = optional_param('cancel', '', PARAM_TEXT);
-$dlt = optional_param('dlt', 0, PARAM_INT);
+if ($dlt) {
+    require_sesskey();
+    $cutoff = required_param('cutoff', PARAM_INT);
+    if ($cutoff <= 0 || $cutoff > time()) {
+        throw new moodle_exception('cutoffdatefuture', 'tool_clearbackupfiles', $pageurl);
+    }
 
-$returnurl = new moodle_url($CFG->wwwroot);
-
-$mform = new confirm_form();
-
-if ($submitbutton == '' && $dlt == 0 && $cancelbutton != 'Cancel') {
-    $mform->display();
-}
-
-if ($mform->is_cancelled()) {
-    redirect($returnurl);
-} else if ($formdata = $mform->get_data()) {
-    echo $OUTPUT->confirm(
-        get_string('warningalert', 'tool_clearbackupfiles'),
-        $CFG->wwwroot . '/admin/tool/clearbackupfiles/index.php?dlt=1',
-        $CFG->wwwroot . '/admin/tool/clearbackupfiles/index.php'
-    );
-}
-
-if ($dlt == 1) {
     $clearfileprocesser = new tool_clearbackupfiles_processer();
-    $clearfileprocesser->execute();
+    $clearfileprocesser->execute($cutoff);
 
     $files = $clearfileprocesser->get_deleted_files();
     $filecount = count($files);
@@ -87,7 +80,7 @@ if ($dlt == 1) {
         $table->align = ['left', 'left'];
         $table->data = $data;
 
-        $a = new StdClass();
+        $a = new stdClass();
         $a->filecount = $filecount;
         $filesize = $clearfileprocesser->get_total_file_size();
         $a->filesize = tool_clearbackupfiles_processer::format_bytes($filesize);
@@ -98,5 +91,37 @@ if ($dlt == 1) {
     } else {
         echo html_writer::tag('p', get_string('filedeletedempty', 'tool_clearbackupfiles'));
     }
+} else if ($formdata = $mform->get_data()) {
+    // An explicit date overrides the configured retention period for this run only.
+    if (!empty($formdata->cutoffdate)) {
+        $cutoff = (int) $formdata->cutoffdate;
+    } else {
+        $cutoff = tool_clearbackupfiles_processer::get_default_cutoff();
+    }
+
+    $summary = \tool_clearbackupfiles\backup_file_selector::get_summary_older_than($cutoff);
+
+    if ($summary->filecount) {
+        $a = new stdClass();
+        $a->filecount = $summary->filecount;
+        $a->filesize = tool_clearbackupfiles_processer::format_bytes($summary->totalsize);
+        $a->cutoff = userdate($cutoff);
+
+        echo $OUTPUT->confirm(
+            get_string('confirmdelete', 'tool_clearbackupfiles', $a) . ' ' .
+                get_string('warningalert', 'tool_clearbackupfiles'),
+            new moodle_url($pageurl, ['dlt' => 1, 'cutoff' => $cutoff, 'sesskey' => sesskey()]),
+            $pageurl
+        );
+    } else {
+        echo $OUTPUT->notification(
+            get_string('nofilesbeforecutoff', 'tool_clearbackupfiles', userdate($cutoff)),
+            \core\output\notification::NOTIFY_INFO
+        );
+        echo $OUTPUT->continue_button($pageurl);
+    }
+} else {
+    $mform->display();
 }
+
 echo $OUTPUT->footer();

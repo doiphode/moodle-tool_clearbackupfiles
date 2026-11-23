@@ -33,16 +33,17 @@ class tool_clearbackupfiles_processer {
     private $totalfilesize = 0;
 
     /**
-     * Erases the backup files.
+     * Erases the backup files created on or before the cutoff.
      *
+     * @param int|null $cutofftimestamp Unix timestamp; null uses the configured retention period
      * @return void
      */
-    public function execute() {
+    public function execute(?int $cutofftimestamp = null) {
+        if ($cutofftimestamp === null) {
+            $cutofftimestamp = self::get_default_cutoff();
+        }
 
-        $toolconfig = get_config('tool_clearbackupfiles');
-        $days = $toolconfig->days;
-
-        $backupfiles = $this->get_backup_files($days);
+        $backupfiles = \tool_clearbackupfiles\backup_file_selector::get_files_older_than($cutofftimestamp);
 
         if (!$backupfiles) {
             return null;
@@ -52,6 +53,10 @@ class tool_clearbackupfiles_processer {
 
         foreach ($backupfiles as $filedata) {
             $backupfile = $filestorage->get_file_by_hash($filedata->pathnamehash);
+            if (!$backupfile) {
+                // Already removed, for example by a concurrent cleanup run.
+                continue;
+            }
             $backupfile->delete();
 
             $file = new stdClass();
@@ -92,14 +97,14 @@ class tool_clearbackupfiles_processer {
     }
 
     /**
-     * Returns the backup files that are older than $days days
+     * Returns the cutoff timestamp derived from the configured retention period.
      *
-     * @param int $days
-     * @return array
+     * @return int Unix timestamp; backup files created on or before it are selected
      */
-    private function get_backup_files($days) {
-        $cutofftimestamp = time() - ($days * DAYSECS);
-        return \tool_clearbackupfiles\backup_file_selector::get_files_older_than($cutofftimestamp);
+    public static function get_default_cutoff(): int {
+        $days = (int) get_config('tool_clearbackupfiles', 'days');
+        // A retention of 0 days or less selects every backup; never return a cutoff in the future.
+        return time() - (max(0, $days) * DAYSECS);
     }
 
     /**
@@ -107,9 +112,12 @@ class tool_clearbackupfiles_processer {
      *
      * @param int $size The file size in bytes
      * @param int $precision The number of digits to round to
-     * @return float The human-readable file size
+     * @return string The human-readable file size
      */
     public static function format_bytes($size, $precision = 2) {
+        if ($size <= 0) {
+            return '0';
+        }
         $base = log($size, 1024);
         $suffixes = ['', 'KB', 'MB', 'GB', 'TB'];
         return round(pow(1024, $base - floor($base)), $precision) . $suffixes[floor($base)];

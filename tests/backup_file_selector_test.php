@@ -77,4 +77,37 @@ final class backup_file_selector_test extends \advanced_testcase {
         $this->assertContains('in-scope-backup.mbz', $filenames);
         $this->assertNotContains('decoy-uploaded-backup.mbz', $filenames);
     }
+
+    /**
+     * The summary counts and sums only in-scope files, matching the selection.
+     */
+    public function test_get_summary_older_than(): void {
+        $this->resetAfterTest();
+
+        $fs = get_file_storage();
+        $context = \context_system::instance();
+        $cutoff = time();
+        $files = [
+            ['backup', 'automated', 'a.mbz', str_repeat('x', 100)],
+            ['user', 'backup', 'b.mbz', str_repeat('x', 50)],
+            ['course', 'overviewfiles', 'decoy.mbz', str_repeat('x', 1000)],
+        ];
+        foreach ($files as [$component, $filearea, $filename, $content]) {
+            $fs->create_file_from_string([
+                'contextid' => $context->id,
+                'component' => $component,
+                'filearea' => $filearea,
+                'itemid' => 0,
+                'filepath' => '/',
+                'filename' => $filename,
+                'timecreated' => $cutoff - DAYSECS,
+            ], $content);
+        }
+
+        $summary = backup_file_selector::get_summary_older_than($cutoff);
+
+        $this->assertSame(2, $summary->filecount);
+        $this->assertSame(150, $summary->totalsize);
+        $this->assertCount(2, backup_file_selector::get_files_older_than($cutoff));
+    }
 }

@@ -28,9 +28,15 @@ $string['backupstoragescope'] = 'Cleanup applies only to archives in Moodle back
 $string['backupstoragescopeheading'] = 'Which files are affected';
 
 $string['clearbackupcompleted'] = 'Clear backup completed';
+$string['confirmdelete'] = 'This permanently deletes {$a->filecount} backup files ({$a->filesize}) created on or before {$a->cutoff}. Deleted backups cannot be restored.';
 $string['continuetoclearbackup'] = 'Continue to clear backup';
 $string['coursebackupremoved'] = 'Course backup deleted';
 $string['crontask'] = 'Clear backup (.mbz) files task';
+$string['cutoffdate'] = 'Cutoff date';
+$string['cutoffdate_help'] = 'Optional. If enabled, this run deletes backup archives created on or before 00:00 of the selected date (backups from that day itself are kept) instead of using the configured retention period. It applies to this manual run only: the plugin setting and the scheduled task are not changed. The same backup file areas are affected as in the scheduled cleanup.';
+$string['cutoffdatefuture'] = 'The cutoff date must not be in the future.';
+$string['cutoffdefault'] = 'If no date is set, backup archives that are at least {$a} days old are deleted (configured retention period).';
+$string['cutoffdefaultall'] = 'If no date is set, every backup archive is deleted, including backups created moments ago, because the configured retention period is 0 days or less.';
 
 $string['days'] = 'Retention period (days)';
 $string['daysdesc'] = 'Backup archives that are at least this many days old are deleted. The age is counted from the time the file was created in Moodle file storage, not from the course or activity dates. This value is used by both the manual cleanup page and the scheduled task. A value of 0 or less selects every backup archive, including backups created moments ago. Only Moodle backup file areas are affected; uploaded .mbz files in course content areas are not removed. Deleted backups cannot be restored, so test the value on a staging site first.';
@@ -43,6 +49,8 @@ $string['filedeletedfooter'] = 'In total {$a->filecount} backup files were delet
 $string['filedeletedheader'] = 'The course backup files deleted during this operation are as follows:';
 $string['filename'] = 'File name';
 $string['filesize'] = 'File size';
+
+$string['nofilesbeforecutoff'] = 'There are no backup files created on or before {$a}.';
 
 $string['pluginname'] = 'Clear backup files';
 

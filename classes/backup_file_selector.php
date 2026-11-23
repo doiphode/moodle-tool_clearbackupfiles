@@ -74,12 +74,31 @@ class backup_file_selector {
     }
 
     /**
+     * Counts the files older than the cutoff and sums their size, without loading the rows.
+     *
+     * @param int $cutofftimestamp Unix timestamp; files with timecreated <= this value are counted
+     * @return \stdClass Object with filecount and totalsize (bytes)
+     */
+    public static function get_summary_older_than(int $cutofftimestamp): \stdClass {
+        global $DB;
+
+        [$sql, $params] = self::get_select_sql($cutofftimestamp, 'COUNT(1) AS filecount, COALESCE(SUM(filesize), 0) AS totalsize');
+        $summary = $DB->get_record_sql($sql, $params);
+
+        return (object) [
+            'filecount' => (int) $summary->filecount,
+            'totalsize' => (int) $summary->totalsize,
+        ];
+    }
+
+    /**
      * SQL and parameters for backup file selection (shared by manual and scheduled cleanup).
      *
      * @param int $cutofftimestamp Unix timestamp
+     * @param string $fields Columns to select
      * @return array{0: string, 1: array}
      */
-    public static function get_select_sql(int $cutofftimestamp): array {
+    public static function get_select_sql(int $cutofftimestamp, string $fields = '*'): array {
         $conditions = [];
         $params = ['cutofftimestamp' => $cutofftimestamp];
         $index = 0;
@@ -97,7 +116,7 @@ class backup_file_selector {
         }
 
         $where = implode(' OR ', $conditions);
-        $sql = "SELECT *
+        $sql = "SELECT $fields
                   FROM {files}
                  WHERE filename <> '.'
                    AND timecreated <= :cutofftimestamp
