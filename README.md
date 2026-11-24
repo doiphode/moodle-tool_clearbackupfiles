@@ -58,7 +58,7 @@ After installation, navigate to:
 2. Set the retention period and optionally enable the scheduled cleanup.
 3. Click **Continue to clear backup**.
 4. Optionally enable **Cutoff date** and pick a date; backups created on or before 00:00 of that date are deleted. This overrides the retention period for this run only; the setting and the scheduled task are not changed.
-5. Click **Delete**. The confirmation shows the cutoff date, the number of files and their total size.
+5. Choose **Run: Now** or **In the background (ad hoc task)** for large cleanups, then click **Delete**. The confirmation shows the cutoff date, the number of files and their total size.
 6. Confirm — this operation is **irreversible**.
 
 After cleanup, the plugin displays:

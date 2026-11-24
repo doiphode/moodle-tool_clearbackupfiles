@@ -48,6 +48,15 @@ class confirm_form extends moodleform {
         $defaultkey = $days > 0 ? 'cutoffdefault' : 'cutoffdefaultall';
         $mform->addElement('static', 'cutoffdefault', '', get_string($defaultkey, 'tool_clearbackupfiles', $days));
 
+        $runmodes = [
+            $mform->createElement('radio', 'runmode', '', get_string('runmodenow', 'tool_clearbackupfiles'), 'now'),
+            $mform->createElement('radio', 'runmode', '', get_string('runmodequeue', 'tool_clearbackupfiles'), 'queue'),
+        ];
+        $mform->addGroup($runmodes, 'runmodegroup', get_string('runmode', 'tool_clearbackupfiles'), '<br>', false);
+        $mform->setDefault('runmode', 'now');
+        $mform->setType('runmode', PARAM_ALPHA);
+        $mform->addHelpButton('runmodegroup', 'runmode', 'tool_clearbackupfiles');
+
         $this->add_action_buttons(true, get_string('delete'));
     }
 

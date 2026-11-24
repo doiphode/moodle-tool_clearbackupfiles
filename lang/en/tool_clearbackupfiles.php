@@ -27,8 +27,11 @@ $string['backupremovedlog'] = 'Course backup file {$a->filename} of size {$a->fi
 $string['backupstoragescope'] = 'Cleanup applies only to archives in Moodle backup storage: backup component areas (course, activity, automated, backup) and the user private backup area (user/backup). Files in other areas (for example course overview files) are never selected, even if they use a backup MIME type.';
 $string['backupstoragescopeheading'] = 'Which files are affected';
 
+$string['cleanupalreadyqueued'] = 'A background cleanup is already queued or waiting for a retry, so no new one was added. Check the task logs for its status.';
+$string['cleanupqueued'] = 'The cleanup was queued as a background task and runs with the next cron run. Failures and progress are shown in the task logs; deleted files are listed in the site logs.';
 $string['clearbackupcompleted'] = 'Clear backup completed';
 $string['confirmdelete'] = 'This permanently deletes {$a->filecount} backup files ({$a->filesize}) created on or before {$a->cutoff}. Deleted backups cannot be restored.';
+$string['confirmqueue'] = 'A background task will permanently delete up to {$a->filecount} backup files ({$a->filesize}) created on or before {$a->cutoff} with the next cron run. Deleted backups cannot be restored.';
 $string['continuetoclearbackup'] = 'Continue to clear backup';
 $string['coursebackupremoved'] = 'Course backup deleted';
 $string['crontask'] = 'Clear backup (.mbz) files task';
@@ -50,9 +53,16 @@ $string['filedeletedheader'] = 'The course backup files deleted during this oper
 $string['filename'] = 'File name';
 $string['filesize'] = 'File size';
 
+$string['manualcleanuptask'] = 'Manual backup cleanup (background)';
+
 $string['nofilesbeforecutoff'] = 'There are no backup files created on or before {$a}.';
 
 $string['pluginname'] = 'Clear backup files';
+
+$string['runmode'] = 'Run';
+$string['runmode_help'] = 'Choose "Now" to delete the files in this page request and see the list of deleted files. Choose "In the background" for large cleanups: an ad hoc task deletes the files with the next cron run, using the same cutoff and the same file selection. Cron must be running. Failures are shown in the task logs (and the ad hoc tasks page); deleted files are recorded in the site logs.';
+$string['runmodenow'] = 'Now';
+$string['runmodequeue'] = 'In the background (ad hoc task)';
 
 $string['warningalert'] = 'Are you sure you want to continue?';
 $string['warningmsg'] = 'Please note, clearing of backup files is an irreversible process, you will not be able to restore deleted backup files.';

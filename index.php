@@ -55,41 +55,64 @@ if ($dlt) {
     if ($cutoff <= 0 || $cutoff > time()) {
         throw new moodle_exception('cutoffdatefuture', 'tool_clearbackupfiles', $pageurl);
     }
+    $runmode = optional_param('runmode', 'now', PARAM_ALPHA);
 
-    $clearfileprocesser = new tool_clearbackupfiles_processer();
-    $clearfileprocesser->execute($cutoff);
-
-    $files = $clearfileprocesser->get_deleted_files();
-    $filecount = count($files);
-
-    if ($filecount) {
-        $data = [];
-        foreach ($files as $file) {
-            $line = [];
-            $line[] = $file->name;
-            $line[] = $clearfileprocesser->format_bytes($file->size);
-            $data[] = $line;
+    if ($runmode === 'queue') {
+        // Only one background cleanup at a time, for all admins and cutoffs, including one waiting for a retry.
+        $pending = \core\task\manager::get_adhoc_tasks(\tool_clearbackupfiles\task\manual_cleanup_task::class);
+        if ($pending) {
+            $message = get_string('cleanupalreadyqueued', 'tool_clearbackupfiles');
+            $type = \core\output\notification::NOTIFY_WARNING;
+        } else {
+            // Same cutoff and rules as the immediate run.
+            $task = \tool_clearbackupfiles\task\manual_cleanup_task::create($cutoff, $USER->id);
+            \core\task\manager::queue_adhoc_task($task);
+            $message = get_string('cleanupqueued', 'tool_clearbackupfiles');
+            $type = \core\output\notification::NOTIFY_SUCCESS;
         }
 
-        $table = new html_table();
-        $table->head = [
-            get_string('filename', 'tool_clearbackupfiles'),
-            get_string('filesize', 'tool_clearbackupfiles'),
-        ];
-        $table->size = ['60%', '40%'];
-        $table->align = ['left', 'left'];
-        $table->data = $data;
-
-        $a = new stdClass();
-        $a->filecount = $filecount;
-        $filesize = $clearfileprocesser->get_total_file_size();
-        $a->filesize = tool_clearbackupfiles_processer::format_bytes($filesize);
-
-        echo html_writer::tag('p', get_string('filedeletedheader', 'tool_clearbackupfiles'));
-        echo html_writer::table($table);
-        echo html_writer::tag('p', get_string('filedeletedfooter', 'tool_clearbackupfiles', $a));
+        $links = html_writer::alist([
+            html_writer::link(new moodle_url('/admin/tasklogs.php'), get_string('tasklogs', 'admin')),
+            html_writer::link(new moodle_url('/report/log/index.php', ['id' => SITEID]), get_string('logs')),
+        ]);
+        echo $OUTPUT->notification($message . $links, $type);
+        echo $OUTPUT->continue_button($pageurl);
     } else {
-        echo html_writer::tag('p', get_string('filedeletedempty', 'tool_clearbackupfiles'));
+        $clearfileprocesser = new tool_clearbackupfiles_processer();
+        $clearfileprocesser->execute($cutoff);
+
+        $files = $clearfileprocesser->get_deleted_files();
+        $filecount = count($files);
+
+        if ($filecount) {
+            $data = [];
+            foreach ($files as $file) {
+                $line = [];
+                $line[] = $file->name;
+                $line[] = $clearfileprocesser->format_bytes($file->size);
+                $data[] = $line;
+            }
+
+            $table = new html_table();
+            $table->head = [
+                get_string('filename', 'tool_clearbackupfiles'),
+                get_string('filesize', 'tool_clearbackupfiles'),
+            ];
+            $table->size = ['60%', '40%'];
+            $table->align = ['left', 'left'];
+            $table->data = $data;
+
+            $a = new stdClass();
+            $a->filecount = $filecount;
+            $filesize = $clearfileprocesser->get_total_file_size();
+            $a->filesize = tool_clearbackupfiles_processer::format_bytes($filesize);
+
+            echo html_writer::tag('p', get_string('filedeletedheader', 'tool_clearbackupfiles'));
+            echo html_writer::table($table);
+            echo html_writer::tag('p', get_string('filedeletedfooter', 'tool_clearbackupfiles', $a));
+        } else {
+            echo html_writer::tag('p', get_string('filedeletedempty', 'tool_clearbackupfiles'));
+        }
     }
 } else if ($formdata = $mform->get_data()) {
     // An explicit date overrides the configured retention period for this run only.
@@ -107,10 +130,18 @@ if ($dlt) {
         $a->filesize = tool_clearbackupfiles_processer::format_bytes($summary->totalsize);
         $a->cutoff = userdate($cutoff);
 
+        $runmode = ($formdata->runmode ?? 'now') === 'queue' ? 'queue' : 'now';
+        $confirmkey = $runmode === 'queue' ? 'confirmqueue' : 'confirmdelete';
+
         echo $OUTPUT->confirm(
-            get_string('confirmdelete', 'tool_clearbackupfiles', $a) . ' ' .
+            get_string($confirmkey, 'tool_clearbackupfiles', $a) . ' ' .
                 get_string('warningalert', 'tool_clearbackupfiles'),
-            new moodle_url($pageurl, ['dlt' => 1, 'cutoff' => $cutoff, 'sesskey' => sesskey()]),
+            new moodle_url($pageurl, [
+                'dlt' => 1,
+                'cutoff' => $cutoff,
+                'runmode' => $runmode,
+                'sesskey' => sesskey(),
+            ]),
             $pageurl
         );
     } else {
